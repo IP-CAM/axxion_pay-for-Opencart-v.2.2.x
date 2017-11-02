@@ -57,21 +57,14 @@ class ControllerPaymentAxxionPay extends Controller {
 		];
 
 		$data['api_send'] = cryptoJsAesEncrypt($data['api']);
-		//return json_encode(['status' => "hola mundo"]);
-		/*var_dump($order_info);
-		exit();*/
 		$response = curlSend('https://cryptopago.itaxxion.cl/api/opencart/generateQR', $data['api_send']);
 
 		$responseData = json_decode($response);
 		header('Content-Type: application/json');
 		if ($responseData->status == 'success') {
-			//var_dump($responseData);
 			$order_info['payment_custom_field']['token'] = $responseData->data->token;
 			$this->session->data['token'] = $responseData->data->token;
-			//idk this happen
-			//$order_info['customer_group_id'] = isset($order_info['customer_group_id']) ? $order_info['customer_group_id'] : 0;
 			$this->addTokenToOrder($this->session->data['order_id'], $responseData->data->token);
-			//$this->model_checkout_order->editOrder($order_info['order_id'], $order_info);
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('axxion_pay_entry_order_waiting'));
 			//TODO: Handle axxion gateway or cryptomkt gateway
 			echo json_encode([
@@ -84,9 +77,8 @@ class ControllerPaymentAxxionPay extends Controller {
 	}
 
 	public function callback() {
-		$data = json_decode($this->request->post);
-		if (isset($data['data']['external_id'])) {
-			$order_id = trim(explode($_SERVER['host'].'_', $data['data']['external_id'],2)[1]);
+		if (isset($this->request->post['external_id'])) {
+			$order_id = trim(explode($_SERVER['host'].'_', $this->request->post['external_id'],2)[1]);
 		} else {
 			die('Illegal Access');
 		}
@@ -95,9 +87,8 @@ class ControllerPaymentAxxionPay extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if ($order_info) {
-			//$data = array_merge($this->request->post,$this->request->get);
-			if (isset($data['data']['token']) && $data['data']['token'] == $order_info['payment_custom_field']['token']){
-				switch ((integer)$data['data']['status']) {
+			if (isset($this->request->post['token']) && $this->request->post['token'] == $order_info['payment_custom_field']['token']){
+				switch ((integer)$this->request->post['status']) {
 					case -4:
 						$order_status = $this->config->get('axxion_pay_order_multiple_pay');
 						break;
@@ -105,6 +96,7 @@ class ControllerPaymentAxxionPay extends Controller {
 						$order_status = $this->config->get('axxion_pay_order_not_matching_pay');
 						break;
 					case -2: 
+						$order_status = $this->config->get('axxion_pay_order_multiple_pay');
 						break;
 					case -1: 
 						$order_status = $this->config->get('axxion_pay_entry_order_expired');
@@ -129,7 +121,6 @@ class ControllerPaymentAxxionPay extends Controller {
 			} else {
 				die('Illegal Access');
 			}
-			
 		}
 	}
 
@@ -156,4 +147,3 @@ class ControllerPaymentAxxionPay extends Controller {
 
 	}
 }
-
