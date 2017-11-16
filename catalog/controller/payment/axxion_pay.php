@@ -40,7 +40,7 @@ class ControllerPaymentAxxionPay extends Controller {
 				$data['orderamount'] = $this->currency->format($order_info['total'], $data['currency'] , false, false);
 				$data['callbackurl'] = $this->url->link('payment/axxion_pay/callback');
 				$data['success_url'] = $this->url->link('checkout/success');
-				$data['error_url'] = $this->url->link('payment/axxion_pay/error');
+				$data['error_url'] = $this->url->link('checkout/checkout');
 				$data['order_id'] = $_SERVER['HTTP_HOST'].'_'.$this->session->data['order_id'];
 				$data['cart_email'] = trim($this->config->get('axxion_pay_cryptomkt_email'));
 			}
@@ -65,7 +65,8 @@ class ControllerPaymentAxxionPay extends Controller {
 			$order_info['payment_custom_field']['token'] = $responseData->data->token;
 			$this->session->data['token'] = $responseData->data->token;
 			$this->addTokenToOrder($this->session->data['order_id'], $responseData->data->token);
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('axxion_pay_entry_order_waiting'));
+			//FEEDBACK: No not add to order until gets paid
+			//$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('axxion_pay_entry_order_waiting'));
 			//TODO: Handle axxion gateway or cryptomkt gateway
 			echo json_encode([
 				'status' => 'success',
@@ -82,7 +83,12 @@ class ControllerPaymentAxxionPay extends Controller {
 		} else {
 			die('Illegal Access');
 		}
-
+		$obs = "";
+		$notify = false;
+		if (isset($this->request->post['obs'])) {
+			$obs = $this->request->post['obs'];
+		}
+		
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
@@ -91,33 +97,45 @@ class ControllerPaymentAxxionPay extends Controller {
 				switch ((integer)$this->request->post['status']) {
 					case -4:
 						$order_status = $this->config->get('axxion_pay_order_multiple_pay');
+						$notify = (boolean)$this->config->get('axxion_pay_notify_order_multiple_pay');
 						break;
 					case -3: 
 						$order_status = $this->config->get('axxion_pay_order_not_matching_pay');
+						$notify = (boolean)$this->config->get('axxion_pay_notify_order_not_matching_pay');
 						break;
 					case -2: 
 						$order_status = $this->config->get('axxion_pay_order_multiple_pay');
+						$notify = (boolean)$this->config->get('axxion_pay_notify_order_multiple_pay');
 						break;
 					case -1: 
 						$order_status = $this->config->get('axxion_pay_entry_order_expired');
+						$notify = (boolean)$this->config->get('axxion_pay_notify_order_expired');
 						break;
 					case 0:
 						$order_status = $this->config->get('axxion_pay_entry_order_waiting');
+						$notify = (boolean)$this->config->get('axxion_pay_notify_order_waiting');
 						break;
 					case 1:
 						$order_status = $this->config->get('axxion_pay_entry_order_waiting_block');
+						$notify = (boolean)$this->config->get('axxion_pay_notify_order_waiting_block');
 						break;
 					case 2:
 						$order_status = $this->config->get('axxion_pay_entry_order_processing');
+						$notify = (boolean)$this->config->get('axxion_pay_notify_order_processing');
 						break;
 					case 3:
 						$order_status = $this->config->get('axxion_pay_entry_order_success');
+						$notify = (boolean)$this->config->get('axxion_pay_notify_order_success');
 						break;
 					default:
 						# code...
 						break;
 				}
-				$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status);
+				$notify = $notify == null ? false : $notify;
+				if (isset($this->request->post['obs'])) {
+					$obs = $this->request->post['obs'];
+				}
+				$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status, $obs, $notify);
 			} else {
 				die('Illegal Access');
 			}

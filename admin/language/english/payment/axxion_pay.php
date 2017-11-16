@@ -5,11 +5,16 @@ $_['heading_title'] = 'Ethereum via Axxion Pay';
 $_['text_payment']		 = 'Payment';
 $_['text_success']		 = 'Success: You have modified Axxion Pay details!';
 $_['text_edit']          = 'Edit Ethereum Payment';
+$_['text_axxion_pay']	 = '<a target="_BLANK" href="https://cryptopago.itaxxion.cl"><img src="view/image/payment/axxion_pay.png" alt="Axxion Pay Website" title="Axxion Pay Website" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_all_zones']     = 'All Zones';
+$_['text_yes']     = 'Yes';
+$_['text_no']     = 'No';
 
 $_['text_enabled'] = 'Enabled';
 $_['text_disabled'] = 'Disabled';
- 
+$_['text_notify_me'] = 'Notify Me';
+$_['help_text_notify_me'] = 'Notify via email when the order has this status';
+
 $_['cryptomkt_email'] = 'CryptoMKT email';
 $_['help_cryptomkt_email'] = 'Please enter your CryptoMKT Email, if you don\'t have one, then this payment method'.
 							' will raise an error';

@@ -22,6 +22,10 @@ class ControllerPaymentAxxionPay extends Controller {
 		$data['button_save'] = $this->language->get('text_button_save');
 		$data['button_cancel'] = $this->language->get('text_button_cancel');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
+		$data['text_notify_me'] = $this->language->get('text_notify_me');
+		$data['help_text_notify_me'] = $this->language->get('help_text_notify_me');
+		$data['text_yes'] = $this->language->get('text_yes');
+		$data['text_no'] = $this->language->get('text_no');
 
 		$data['entry_cryptomkt_email'] = $this->language->get('cryptomkt_email');
 		$data['help_cryptomkt_email'] = $this->language->get('help_cryptomkt_email');
@@ -122,10 +126,22 @@ class ControllerPaymentAxxionPay extends Controller {
 			$data['axxion_pay_order_multiple_pay'] = $this->config->get('axxion_pay_order_multiple_pay');
 		}
 
+		if (isset($this->request->post['axxion_pay_notify_order_multiple_pay'])) {
+			$data['axxion_pay_notify_order_multiple_pay'] = $this->request->post['axxion_pay_notify_order_multiple_pay'];
+		} else {
+			$data['axxion_pay_notify_order_multiple_pay'] = $this->config->get('axxion_pay_notify_order_multiple_pay');
+		}
+
 		if (isset($this->request->post['axxion_pay_order_not_matching_pay'])) {
 			$data['axxion_pay_order_not_matching_pay'] = $this->request->post['axxion_pay_order_not_matching_pay'];
 		} else {
 			$data['axxion_pay_order_not_matching_pay'] = $this->config->get('axxion_pay_order_not_matching_pay');
+		}
+
+		if (isset($this->request->post['axxion_pay_notify_order_not_matching_pay'])) {
+			$data['axxion_pay_notify_order_not_matching_pay'] = $this->request->post['axxion_pay_notify_order_not_matching_pay'];
+		} else {
+			$data['axxion_pay_notify_order_not_matching_pay'] = $this->config->get('axxion_pay_notify_order_not_matching_pay');
 		}
 
 		if (isset($this->request->post['axxion_pay_entry_order_expired'])) {
@@ -134,10 +150,22 @@ class ControllerPaymentAxxionPay extends Controller {
 			$data['axxion_pay_entry_order_expired'] = $this->config->get('axxion_pay_entry_order_expired');
 		}
 
+		if (isset($this->request->post['axxion_pay_notify_order_expired'])) {
+			$data['axxion_pay_notify_order_expired'] = $this->request->post['axxion_pay_notify_order_expired'];
+		} else {
+			$data['axxion_pay_notify_order_expired'] = $this->config->get('axxion_pay_notify_order_expired');
+		}
+
 		if (isset($this->request->post['axxion_pay_entry_order_waiting'])) {
 			$data['axxion_pay_entry_order_waiting'] = $this->request->post['axxion_pay_entry_order_waiting'];
 		} else {
 			$data['axxion_pay_entry_order_waiting'] = $this->config->get('axxion_pay_entry_order_waiting');
+		}
+
+		if (isset($this->request->post['axxion_pay_notify_order_waiting'])) {
+			$data['axxion_pay_notify_order_waiting'] = $this->request->post['axxion_pay_notify_order_waiting'];
+		} else {
+			$data['axxion_pay_notify_order_waiting'] = $this->config->get('axxion_pay_notify_order_waiting');
 		}
 
 		if (isset($this->request->post['axxion_pay_entry_order_waiting_block'])) {
@@ -146,10 +174,22 @@ class ControllerPaymentAxxionPay extends Controller {
 			$data['axxion_pay_entry_order_waiting_block'] = $this->config->get('axxion_pay_entry_order_waiting_block');
 		}
 
+		if (isset($this->request->post['axxion_pay_notify_order_waiting_block'])) {
+			$data['axxion_pay_notify_order_waiting_block'] = $this->request->post['axxion_pay_notify_order_waiting_block'];
+		} else {
+			$data['axxion_pay_notify_order_waiting_block'] = $this->config->get('axxion_pay_notify_order_waiting_block');
+		}
+
 		if (isset($this->request->post['axxion_pay_entry_order_processing'])) {
 			$data['axxion_pay_entry_order_processing'] = $this->request->post['axxion_pay_entry_order_processing'];
 		} else {
 			$data['axxion_pay_entry_order_processing'] = $this->config->get('axxion_pay_entry_order_processing');
+		}
+
+		if (isset($this->request->post['axxion_pay_notify_order_processing'])) {
+			$data['axxion_pay_notify_order_processing'] = $this->request->post['axxion_pay_notify_order_processing'];
+		} else {
+			$data['axxion_pay_notify_order_processing'] = $this->config->get('axxion_pay_notify_order_processing');
 		}
 
 		if (isset($this->request->post['axxion_pay_entry_order_success'])) {
@@ -158,6 +198,12 @@ class ControllerPaymentAxxionPay extends Controller {
 			$data['axxion_pay_entry_order_success'] = $this->config->get('axxion_pay_entry_order_success');
 		}
 
+		if (isset($this->request->post['axxion_pay_notify_order_success'])) {
+			$data['axxion_pay_notify_order_success'] = $this->request->post['axxion_pay_notify_order_success'];
+		} else {
+			$data['axxion_pay_notify_order_success'] = $this->config->get('axxion_pay_notify_order_success');
+		}
+		
 		$this->load->model('localisation/order_status');
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 

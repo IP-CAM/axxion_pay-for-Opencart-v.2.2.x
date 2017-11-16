@@ -41,22 +41,22 @@
             <label class="col-sm-3 control-label"><?php echo $entry_message_statuses; ?></label>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="axxion_pay_order_status_id"><span data-toggle="tooltip" title="<?php echo $help_entry_order_status; ?>"><?php echo $entry_order_status; ?></span></label>
-            <div class="col-sm-10">
-              <select name="axxion_pay_order_status_id" id="input-order-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $axxion_pay_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name'];   ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-            </div>
+              <label class="col-sm-2 control-label" for="axxion_pay_order_status_id"><span data-toggle="tooltip" title="<?php echo $help_entry_order_status; ?>"><?php echo $entry_order_status; ?></span></label>
+              <div class="col-sm-10">
+                <select name="axxion_pay_order_status_id" id="input-order-status" class="form-control">
+                  <?php foreach ($order_statuses as $order_status) { ?>
+                  <?php if ($order_status['order_status_id'] == $axxion_pay_order_status_id) { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name'];   ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="entry_order_multiple_pay"><span data-toggle="tooltip" title='<?php echo $help_entry_order_multiple_pay; ?> '><?php echo $entry_order_multiple_pay; ?></span></label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 col-xs-12 control-label" for="entry_order_multiple_pay"><span data-toggle="tooltip" title='<?php echo $help_entry_order_multiple_pay; ?> '><?php echo $entry_order_multiple_pay; ?></span></label>
+            <div class="col-sm-6 col-xs-12">
               <select class="form-control" name="axxion_pay_order_multiple_pay" id="order_multiple_pay">
                <?php foreach ($order_statuses as $order_status) : ?>
                 <?php if ($order_status['order_status_id'] == $axxion_pay_order_multiple_pay) : ?>
@@ -67,10 +67,19 @@
               <?php endforeach; ?>
               </select>
             </div>
+            <label class="col-sm-2 col-xs-6 control-label" for="axxion_pay_notify_order_multiple_pay"><span data-toggle="tooltip" title="<?php echo $help_text_notify_me; ?>"><?php echo $text_notify_me; ?></span></label>
+            <div class="col-sm-2 col-xs-6">
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_multiple_pay" class="" value="1" <?php if($axxion_pay_notify_order_multiple_pay == '1') echo 'checked'; ?> ><?php echo $text_yes; ?>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_multiple_pay" class="" value="0" <?php if($axxion_pay_notify_order_multiple_pay != '1') echo 'checked'; ?> ><?php echo $text_no; ?>
+              </label>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="entry_order_not_matching_pay"><span data-toggle="tooltip" title='<?php echo $help_entry_order_not_matching_pay; ?> '><?php echo $entry_order_not_matching_pay; ?></span></label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 control-label col-xs-12" for="entry_order_not_matching_pay"><span data-toggle="tooltip" title='<?php echo $help_entry_order_not_matching_pay; ?> '><?php echo $entry_order_not_matching_pay; ?></span></label>
+            <div class="col-sm-6 col-xs-12">
               <select class="form-control" name="axxion_pay_order_not_matching_pay" id="order_not_matching_pay">
                <?php foreach ($order_statuses as $order_status) : ?>
                 <?php if ($order_status['order_status_id'] == $axxion_pay_order_not_matching_pay) : ?>
@@ -81,10 +90,19 @@
               <?php endforeach; ?>
               </select>
             </div>
+            <label class="col-sm-2 col-xs-6 control-label" for="axxion_pay_notify_order_not_matching_pay"><span data-toggle="tooltip" title="<?php echo $help_text_notify_me; ?>"><?php echo $text_notify_me; ?></span></label>
+            <div class="col-sm-2 col-xs-6">
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_not_matching_pay" class="" value="1" <?php if($axxion_pay_notify_order_not_matching_pay == '1') echo 'checked'; ?> ><?php echo $text_yes; ?>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_not_matching_pay" class="" value="0" <?php if($axxion_pay_notify_order_not_matching_pay != '1') echo 'checked'; ?> ><?php echo $text_no; ?>
+              </label>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="entry_order_expired"><span data-toggle="tooltip" title='<?php echo $help_entry_order_expired; ?> '><?php echo $entry_order_expired; ?></span></label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 col-xs-12 control-label" for="entry_order_expired"><span data-toggle="tooltip" title='<?php echo $help_entry_order_expired; ?> '><?php echo $entry_order_expired; ?></span></label>
+            <div class="col-sm-6 col-xs-12">
               <select class="form-control" name="axxion_pay_entry_order_expired" id="entry_order_expired">
                <?php foreach ($order_statuses as $order_status) : ?>
                 <?php if ($order_status['order_status_id'] == $axxion_pay_entry_order_expired) : ?>
@@ -95,10 +113,19 @@
               <?php endforeach; ?>
               </select>
             </div>
+            <label class="col-sm-2 col-xs-6 control-label" for="axxion_pay_notify_order_expired"><span data-toggle="tooltip" title="<?php echo $help_text_notify_me; ?>"><?php echo $text_notify_me; ?></span></label>
+            <div class="col-sm-2 col-xs-6">
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_expired" class="" value="1" <?php if($axxion_pay_notify_order_expired == '1') echo 'checked'; ?> ><?php echo $text_yes; ?>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_expired" class="" value="0" <?php if($axxion_pay_notify_order_expired != '1') echo 'checked'; ?> ><?php echo $text_no; ?>
+              </label>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="entry_order_waiting"><span data-toggle="tooltip" title='<?php echo $help_entry_order_waiting; ?> '><?php echo $entry_order_waiting; ?></span></label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 col-xs-12 control-label" for="entry_order_waiting"><span data-toggle="tooltip" title='<?php echo $help_entry_order_waiting; ?> '><?php echo $entry_order_waiting; ?></span></label>
+            <div class="col-sm-6 col-xs-12">
               <select class="form-control" name="axxion_pay_entry_order_waiting" id="entry_order_waiting">
                <?php foreach ($order_statuses as $order_status) : ?>
                 <?php if ($order_status['order_status_id'] == $axxion_pay_entry_order_waiting) : ?>
@@ -109,10 +136,19 @@
               <?php endforeach; ?>
               </select>
             </div>
+            <label class="col-sm-2 col-xs-6 control-label" for="axxion_pay_notify_order_waiting"><span data-toggle="tooltip" title="<?php echo $help_text_notify_me; ?>"><?php echo $text_notify_me; ?></span></label>
+            <div class="col-sm-2 col-xs-6">
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_waiting" class="" value="1" <?php if($axxion_pay_notify_order_waiting == '1') echo 'checked'; ?> ><?php echo $text_yes; ?>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_waiting" class="" value="0" <?php if($axxion_pay_notify_order_waiting != '1') echo 'checked'; ?> ><?php echo $text_no; ?>
+              </label>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="entry_order_waiting_block"><span data-toggle="tooltip" title='<?php echo $help_entry_order_waiting_block; ?> '><?php echo $entry_order_waiting_block; ?></span></label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 col-xs-12 control-label" for="entry_order_waiting_block"><span data-toggle="tooltip" title='<?php echo $help_entry_order_waiting_block; ?> '><?php echo $entry_order_waiting_block; ?></span></label>
+            <div class="col-sm-6 col-xs-12">
               <select class="form-control" name="axxion_pay_entry_order_waiting_block" id="entry_order_waiting_block">
                <?php foreach ($order_statuses as $order_status) : ?>
                 <?php if ($order_status['order_status_id'] == $axxion_pay_entry_order_waiting_block) : ?>
@@ -123,10 +159,19 @@
               <?php endforeach; ?>
               </select>
             </div>
+            <label class="col-sm-2 col-xs-6 control-label" for="axxion_pay_notify_order_waiting_block"><span data-toggle="tooltip" title="<?php echo $help_text_notify_me; ?>"><?php echo $text_notify_me; ?></span></label>
+            <div class="col-sm-2 col-xs-6">
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_waiting_block" class="" value="1" <?php if($axxion_pay_notify_order_waiting_block == '1') echo 'checked'; ?> ><?php echo $text_yes; ?>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_waiting_block" class="" value="0" <?php if($axxion_pay_notify_order_waiting_block != '1') echo 'checked'; ?> ><?php echo $text_no; ?>
+              </label>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="entry_order_processing"><span data-toggle="tooltip" title='<?php echo $help_entry_order_processing; ?> '><?php echo $entry_order_processing; ?></span></label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 col-xs-12 control-label" for="entry_order_processing"><span data-toggle="tooltip" title='<?php echo $help_entry_order_processing; ?> '><?php echo $entry_order_processing; ?></span></label>
+            <div class="col-sm-6 col-xs-12">
               <select class="form-control" name="axxion_pay_entry_order_processing" id="entry_order_processing">
                <?php foreach ($order_statuses as $order_status) : ?>
                 <?php if ($order_status['order_status_id'] == $axxion_pay_entry_order_processing) : ?>
@@ -137,10 +182,19 @@
               <?php endforeach; ?>
               </select>
             </div>
+            <label class="col-sm-2 col-xs-6 control-label" for="axxion_pay_notify_order_processing"><span data-toggle="tooltip" title="<?php echo $help_text_notify_me; ?>"><?php echo $text_notify_me; ?></span></label>
+            <div class="col-sm-2 col-xs-6">
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_processing" class="" value="1" <?php if($axxion_pay_notify_order_processing == '1') echo 'checked'; ?> ><?php echo $text_yes; ?>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_processing" class="" value="0" <?php if($axxion_pay_notify_order_processing != '1') echo 'checked'; ?> ><?php echo $text_no; ?>
+              </label>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="entry_order_success"><span data-toggle="tooltip" title='<?php echo $help_entry_order_success; ?> '><?php echo $entry_order_success; ?></span></label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 col-xs-12 control-label" for="entry_order_success"><span data-toggle="tooltip" title='<?php echo $help_entry_order_success; ?> '><?php echo $entry_order_success; ?></span></label>
+            <div class="col-sm-6 col-xs-12">
               <select class="form-control" name="axxion_pay_entry_order_success" id="entry_order_success">
                <?php foreach ($order_statuses as $order_status) : ?>
                 <?php if ($order_status['order_status_id'] == $axxion_pay_entry_order_success) : ?>
@@ -150,6 +204,15 @@
                 <?php endif; ?>
               <?php endforeach; ?>
               </select>
+            </div>
+            <label class="col-sm-2 col-xs-6 control-label" for="axxion_pay_notify_order_success"><span data-toggle="tooltip" title="<?php echo $help_text_notify_me; ?>"><?php echo $text_notify_me; ?></span></label>
+            <div class="col-sm-2 col-xs-6">
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_success" class="" value="1" <?php if($axxion_pay_notify_order_success == '1') echo 'checked'; ?> ><?php echo $text_yes; ?>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="axxion_pay_notify_order_success" class="" value="0" <?php if($axxion_pay_notify_order_success != '1') echo 'checked'; ?> ><?php echo $text_no; ?>
+              </label>
             </div>
           </div>
           <div class="form-group">
