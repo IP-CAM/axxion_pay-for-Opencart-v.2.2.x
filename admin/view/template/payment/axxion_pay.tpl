@@ -227,7 +227,7 @@
               <select name="axxion_pay_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0"><?php echo $text_all_zones; ?></option>
                 <?php foreach ($geo_zones as $geo_zone) { ?>
-                <?php if ($geo_zone['geo_zone_id'] == $pp_standard_geo_zone_id) { ?>
+                <?php if ($geo_zone['geo_zone_id'] == $axxion_pay_geo_zone_id) { ?>
                 <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>

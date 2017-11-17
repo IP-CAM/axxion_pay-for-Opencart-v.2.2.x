@@ -79,7 +79,7 @@ class ControllerPaymentAxxionPay extends Controller {
 
 	public function callback() {
 		if (isset($this->request->post['external_id'])) {
-			$order_id = trim(explode($_SERVER['host'].'_', $this->request->post['external_id'],2)[1]);
+			$order_id = trim(explode($_SERVER['HTTP_HOST'].'_', $this->request->post['external_id'],2)[1]);
 		} else {
 			die('Illegal Access');
 		}
