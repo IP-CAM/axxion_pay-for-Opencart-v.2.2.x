@@ -94,14 +94,27 @@ class ControllerPaymentAxxionPay extends Controller {
 
 		if ($order_info) {
 			if (isset($this->request->post['token']) && $this->request->post['token'] == $order_info['payment_custom_field']['token']){
+				/* NOTICE
+				* THE ORDER WILL CHANGE TO SUCCESS, ONLY IF
+				* THE PAYMENT WAS SUCCESSFULL,
+				* YOU MAY BE NOTICED WHEN THE BUYER MAKE MULTIPLE PAYMENT,
+				* OR WHEN THE PAYMENT DOESNT MATCH THE CORRECT INPUT.
+				* IN THOSE CASES, FELL FREE TO UNCOMMENT THE LINES
+				*/
 				switch ((integer)$this->request->post['status']) {
 					case -4:
 						$order_status = $this->config->get('axxion_pay_order_multiple_pay');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_multiple_pay');
+						//uncomment below if you want to be notified
+						//$notify = $notify == null ? false : $notify;
+						//$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status, $obs, $notify);
 						break;
 					case -3: 
 						$order_status = $this->config->get('axxion_pay_order_not_matching_pay');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_not_matching_pay');
+						//uncomment below if you want to be notified
+						//$notify = $notify == null ? false : $notify;
+						//$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status, $obs, $notify);
 						break;
 					case -2: 
 						$order_status = $this->config->get('axxion_pay_order_multiple_pay');
@@ -126,16 +139,14 @@ class ControllerPaymentAxxionPay extends Controller {
 					case 3:
 						$order_status = $this->config->get('axxion_pay_entry_order_success');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_success');
+						//check if success
+						$notify = $notify == null ? false : $notify;
+						$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status, $obs, $notify);
 						break;
 					default:
 						# code...
 						break;
 				}
-				$notify = $notify == null ? false : $notify;
-				if (isset($this->request->post['obs'])) {
-					$obs = $this->request->post['obs'];
-				}
-				$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status, $obs, $notify);
 			} else {
 				die('Illegal Access');
 			}
