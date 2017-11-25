@@ -57,7 +57,7 @@ class ControllerPaymentAxxionPay extends Controller {
 		];
 
 		$data['api_send'] = cryptoJsAesEncrypt($data['api']);
-		$response = curlSend('https://cryptopago.itaxxion.cl/api/opencart/generateQR', $data['api_send']);
+		$response = curlSend('http://dev.test.local:1337/api/opencart/generateQR', $data['api_send']);
 
 		$responseData = json_decode($response);
 		header('Content-Type: application/json');
@@ -123,6 +123,7 @@ class ControllerPaymentAxxionPay extends Controller {
 					case -1: 
 						$order_status = $this->config->get('axxion_pay_entry_order_expired');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_expired');
+						$response = curlSend('http://dev.test.local:1337/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', $this->request->post);
 						break;
 					case 0:
 						$order_status = $this->config->get('axxion_pay_entry_order_waiting');
@@ -139,6 +140,7 @@ class ControllerPaymentAxxionPay extends Controller {
 					case 3:
 						$order_status = $this->config->get('axxion_pay_entry_order_success');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_success');
+						$response = curlSend('http://dev.test.local:1337/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', $this->request->post);
 						//check if success
 						$notify = $notify == null ? false : $notify;
 						$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status, $obs, $notify);
