@@ -26,7 +26,11 @@ class ControllerPaymentAxxionPay extends Controller {
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/axxion_pay.tpl')){
 			$this->template = $this->config->get('config_template') . '/template/payment/axxion_pay.tpl';
 		} else {
-			$this->template = 'default/template/payment/axxion_pay.tpl';
+			if(version_compare(VERSION, '2.2.0.0', '>=')){
+				$this->template = 'payment/' . 'axxion_pay.tpl';
+			} else {
+				$this->template = 'default/template/payment/' . 'axxion_pay.tpl';
+			}
 		}
 
 		return $this->load->view($this->template, $data);
@@ -105,6 +109,7 @@ class ControllerPaymentAxxionPay extends Controller {
 					case -4:
 						$order_status = $this->config->get('axxion_pay_order_multiple_pay');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_multiple_pay');
+						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', json_encode($this->request->post));
 						//uncomment below if you want to be notified
 						//$notify = $notify == null ? false : $notify;
 						//$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status, $obs, $notify);
@@ -112,6 +117,7 @@ class ControllerPaymentAxxionPay extends Controller {
 					case -3: 
 						$order_status = $this->config->get('axxion_pay_order_not_matching_pay');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_not_matching_pay');
+						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', json_encode($this->request->post));
 						//uncomment below if you want to be notified
 						//$notify = $notify == null ? false : $notify;
 						//$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status, $obs, $notify);
@@ -119,28 +125,32 @@ class ControllerPaymentAxxionPay extends Controller {
 					case -2: 
 						$order_status = $this->config->get('axxion_pay_order_multiple_pay');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_multiple_pay');
+						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', json_encode($this->request->post));
 						break;
 					case -1: 
 						$order_status = $this->config->get('axxion_pay_entry_order_expired');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_expired');
-						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', $this->request->post);
+						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', json_encode($this->request->post));
 						break;
 					case 0:
 						$order_status = $this->config->get('axxion_pay_entry_order_waiting');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_waiting');
+						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', json_encode($this->request->post));
 						break;
 					case 1:
 						$order_status = $this->config->get('axxion_pay_entry_order_waiting_block');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_waiting_block');
+						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', json_encode($this->request->post));
 						break;
 					case 2:
 						$order_status = $this->config->get('axxion_pay_entry_order_processing');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_processing');
+						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', json_encode($this->request->post));
 						break;
 					case 3:
 						$order_status = $this->config->get('axxion_pay_entry_order_success');
 						$notify = (boolean)$this->config->get('axxion_pay_notify_order_success');
-						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', $this->request->post);
+						$response = curlSend('https://cryptopago.itaxxion.cl/invoice/'.$this->request->post['id'].'/'.$this->request->post['token'].'/status', json_encode($this->request->post));
 						//check if success
 						$notify = $notify == null ? false : $notify;
 						$this->model_checkout_order->addOrderHistory($order_info['order_id'], $order_status, $obs, $notify);
