@@ -26,8 +26,8 @@ class ControllerPaymentAxxionPay extends Controller {
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/axxion_pay.tpl')){
 			$this->template = $this->config->get('config_template') . '/template/payment/axxion_pay.tpl';
 		} else {
-			if(version_compare(VERSION, '2.2.0.0', '>=')){
-				$this->template = 'payment/' . 'axxion_pay.tpl';
+			if(version_compare(VERSION, '2.2.0.0', '>=')) {
+				$this->template = 'payment/' . 'axxion_pay';
 			} else {
 				$this->template = 'default/template/payment/' . 'axxion_pay.tpl';
 			}
